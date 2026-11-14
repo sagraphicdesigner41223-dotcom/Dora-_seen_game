@@ -1,0 +1,1322 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="مغامرة دورا وبوتس في عالم حرف السين (س) - لعبة تعليمية تفاعلية للأطفال KG1 - إعداد ميس سمر أحمد عبد المريد">
+    <title>مغامرة دورا وبوتس في عالم حرف السين (س)</title>
+    <!-- تحميل خط عربي طفولي واضح ومناسب لمرحلة رياض الأطفال -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Tajawal:wght@500;700;800;900&display=swap" rel="stylesheet">
+    <!-- تحميل Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --font-main: 'Cairo', 'Tajawal', sans-serif;
+        }
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: var(--font-main);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            background: #87CEEB;
+            min-height: 100vh;
+            touch-action: manipulation;
+        }
+
+        /* حركات كرتونية ناعمة */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes bounceJoy {
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-22px) scale(1.06); }
+            60% { transform: translateY(-8px) scale(0.98); }
+        }
+        @keyframes shakeGentle {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px) rotate(-2deg); }
+            40% { transform: translateX(8px) rotate(2deg); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 0 16px rgba(250, 204, 21, 0); transform: scale(1.05); }
+        }
+        @keyframes balloonRise {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-25vh) rotate(15deg); opacity: 0.9; }
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+        @keyframes butterflyFly {
+            0% { transform: translate(0, 0) rotate(5deg); }
+            25% { transform: translate(25px, -18px) rotate(-5deg); }
+            50% { transform: translate(50px, 5px) rotate(8deg); }
+            75% { transform: translate(20px, 15px) rotate(-4deg); }
+            100% { transform: translate(0, 0) rotate(5deg); }
+        }
+        @keyframes waveHand {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(18deg); }
+            75% { transform: rotate(-12deg); }
+        }
+        @keyframes speakingWave {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7); }
+            50% { transform: scale(1.04); box-shadow: 0 0 0 14px rgba(236, 72, 153, 0); }
+        }
+
+        .anim-float { animation: float 3s ease-in-out infinite; }
+        .anim-joy { animation: bounceJoy 0.8s ease-in-out infinite; }
+        .anim-shake { animation: shakeGentle 0.5s ease-in-out; }
+        .anim-hint { animation: pulseGlow 1.3s infinite; border-color: #facc15 !important; background-color: #fef9c3 !important; }
+        .anim-butterfly { animation: butterflyFly 6s ease-in-out infinite; }
+        .anim-wave { transform-origin: 70% 80%; animation: waveHand 1.6s ease-in-out infinite; }
+        .is-speaking { animation: speakingWave 1s infinite; border-color: #ec4899 !important; }
+
+        /* أزرار ثلاثية الأبعاد مبهجة للأطفال */
+        .btn-kid {
+            transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.22), 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .btn-kid:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(0, 0, 0, 0.22), 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+        .btn-kid:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* خلفيات المستويات المتنوعة بألوان زاهية ومبهجة لأطفال الروضة */
+        .bg-welcome {
+            background: linear-gradient(180deg, #00c6ff 0%, #7ef9ff 48%, #ffeb3b 50%, #4ade80 53%, #16a34a 100%);
+        }
+        .bg-map {
+            background: radial-gradient(circle at 20% 20%, #ffea00 0%, #ff80ab 35%, #40c4ff 75%, #00e676 100%);
+        }
+        .bg-lvl-1 {
+            background: linear-gradient(180deg, #29b6f6 0%, #b3e5fc 52%, #76ff03 52%, #00c853 100%);
+        }
+        .bg-lvl-2 {
+            background: linear-gradient(180deg, #d500f9 0%, #f3e5f5 52%, #ff4081 52%, #f50057 100%);
+        }
+        .bg-lvl-3 {
+            background: linear-gradient(180deg, #00e5ff 0%, #e0f7fa 50%, #1de9b6 50%, #00bfa5 100%);
+        }
+        .bg-lvl-4 {
+            background: linear-gradient(180deg, #ffca28 0%, #fff8e1 55%, #ff7043 55%, #f4511e 100%);
+        }
+        .bg-lvl-5 {
+            background: linear-gradient(180deg, #00e676 0%, #b9f6ca 48%, #00b0ff 48%, #0091ea 100%);
+        }
+        .bg-lvl-6 {
+            background: linear-gradient(180deg, #ff1744 0%, #ffebee 50%, #ffd600 50%, #ff9100 100%);
+        }
+
+        /* أنماط طباعة الشهادة */
+        @media print {
+            body * { visibility: hidden; }
+            #certificate-printable, #certificate-printable * { visibility: visible; }
+            #certificate-printable {
+                position: fixed;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 20px;
+                background: white !important;
+                box-shadow: none !important;
+            }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- حاوية التأثيرات الاحتفالية (بالونات ونجوم) -->
+    <div id="celebration-layer" class="fixed inset-0 pointer-events-none z-50 overflow-hidden"></div>
+
+    <!-- شريط علوي ثابت أثناء اللعب -->
+    <header id="top-hud" class="hidden sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b-4 border-amber-400 px-3 py-2 sm:px-6 shadow-md">
+        <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="btn-back-map" onclick="goToMap()" class="btn-kid bg-amber-400 hover:bg-amber-500 text-amber-950 font-extrabold px-3 py-2 rounded-2xl text-sm sm:text-base flex items-center gap-1 border-2 border-amber-600">
+                    <span>🗺️</span>
+                    <span>الخريطة</span>
+                </button>
+                <div class="bg-purple-100 border-2 border-purple-400 px-3 py-1.5 rounded-2xl flex items-center gap-1.5">
+                    <span class="text-lg">🎒</span>
+                    <span id="hud-child-name" class="font-extrabold text-purple-900 text-sm sm:text-base">البطل</span>
+                </div>
+            </div>
+
+            <div id="hud-progress-wrap" class="hidden md:flex items-center gap-2 flex-1 max-w-xs mx-2">
+                <span class="text-xs font-bold text-slate-600 whitespace-nowrap" id="hud-step-text">المرحلة 1/3</span>
+                <div class="w-full h-4 bg-slate-200 rounded-full overflow-hidden border-2 border-slate-300">
+                    <div id="hud-progress-bar" class="h-full bg-gradient-to-l from-emerald-400 to-green-600 transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="bg-yellow-100 border-2 border-yellow-500 px-3 py-1.5 rounded-2xl flex items-center gap-1.5 shadow-inner">
+                    <span class="text-xl">⭐</span>
+                    <span id="hud-stars" class="font-black text-yellow-800 text-base sm:text-lg">0</span>
+                </div>
+                <button id="btn-mute" onclick="toggleMute()" title="كتم أو تشغيل الصوت" class="btn-kid bg-sky-100 hover:bg-sky-200 text-sky-900 border-2 border-sky-400 p-2 rounded-2xl text-lg">
+                    🔊
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- الحاوية الرئيسية للشاشات -->
+    <main id="app-root" class="min-h-screen flex flex-col">
+
+        <!-- 1. شاشة البداية -->
+        <section id="screen-welcome" class="bg-welcome flex-1 flex flex-col justify-between p-4 sm:p-6 relative overflow-hidden">
+            <div class="pointer-events-none select-none">
+                <div class="absolute top-4 left-4 sm:top-8 sm:left-10 w-20 h-20 sm:w-28 sm:h-28 bg-yellow-300 rounded-full border-4 border-orange-400 shadow-xl flex items-center justify-center text-4xl sm:text-5xl anim-float">☀️</div>
+                <div class="absolute top-6 right-1/4 text-5xl sm:text-7xl opacity-95 anim-float" style="animation-delay: 0.5s;">🌈</div>
+                <div class="absolute top-8 right-8 text-5xl sm:text-7xl opacity-90 anim-float" style="animation-delay: 1s;">☁️</div>
+                <div class="absolute top-24 left-1/3 text-4xl sm:text-6xl opacity-80 anim-float" style="animation-delay: 2s;">🎈</div>
+                <div class="absolute top-1/3 right-10 text-3xl sm:text-4xl anim-butterfly">🦋</div>
+                <div class="absolute top-1/2 left-10 text-3xl sm:text-4xl anim-butterfly" style="animation-delay: 1.5s;">🦋</div>
+                <div class="absolute bottom-2 left-2 text-5xl sm:text-7xl">🌳🌺🌻</div>
+                <div class="absolute bottom-2 right-2 text-5xl sm:text-7xl">🌼🌷🌴</div>
+            </div>
+
+            <div class="relative z-10 text-center mt-2">
+                <div class="inline-block bg-white/95 backdrop-blur-sm border-4 border-pink-400 rounded-3xl px-5 py-2 shadow-lg">
+                    <p class="text-pink-700 font-black text-base sm:text-xl">
+                        إعداد / ميس / سمر أحمد عبد المريد
+                    </p>
+                </div>
+            </div>
+
+            <div class="relative z-10 max-w-4xl mx-auto w-full my-auto py-4 flex flex-col items-center text-center">
+                <div class="flex items-end justify-center gap-2 sm:gap-6 mb-2">
+                    <div id="welcome-dora" class="w-32 h-36 sm:w-44 sm:h-48 anim-float"></div>
+                    <div class="bg-amber-400 text-amber-950 font-black text-4xl sm:text-6xl w-20 h-20 sm:w-24 sm:h-24 rounded-3xl border-4 border-white shadow-xl flex items-center justify-center transform -rotate-6 mb-6">
+                        س
+                    </div>
+                    <div id="welcome-boots" class="w-28 h-32 sm:w-40 sm:h-44 anim-float" style="animation-delay: 0.6s;"></div>
+                </div>
+
+                <div class="bg-white/95 border-4 border-amber-400 rounded-3xl p-5 sm:p-8 shadow-2xl max-w-xl w-full">
+                    <h1 class="text-3xl sm:text-5xl font-black text-purple-700 mb-2 drop-shadow-sm">
+                        هيا نكتشف حرف السين!
+                    </h1>
+                    <p class="text-lg sm:text-2xl font-bold text-orange-600 mb-5">
+                        مغامرة ممتعة مع دورا وبوتس 🎒🐒
+                    </p>
+
+                    <div class="bg-sky-50 border-3 border-sky-300 rounded-2xl p-4 mb-5">
+                        <label for="child-name-input" class="block text-lg sm:text-xl font-extrabold text-sky-900 mb-2">
+                            ما اسمك يا بطل؟ 🌟
+                        </label>
+                        <input id="child-name-input" type="text" maxlength="20" placeholder="اكتب اسمك هنا..."
+                            class="w-full text-center text-xl sm:text-2xl font-bold py-3 px-4 rounded-2xl border-3 border-sky-400 focus:border-purple-500 focus:outline-none bg-white text-slate-800 shadow-inner">
+                        <p id="name-error-msg" class="hidden text-rose-600 font-bold text-sm mt-2">
+                            من فضلك اكتب اسمك الجميل لنبدأ المغامرة! 😊
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <button onclick="startAdventure(false)" class="btn-kid flex-1 bg-gradient-to-b from-emerald-400 to-green-600 hover:from-emerald-500 hover:to-green-700 text-white font-black text-xl sm:text-2xl py-4 px-6 rounded-2xl border-3 border-green-800 flex items-center justify-center gap-2">
+                            <span>🚀</span>
+                            <span>ابدأ المغامرة</span>
+                        </button>
+                        <button id="btn-continue-saved" onclick="startAdventure(true)" class="hidden btn-kid bg-gradient-to-b from-amber-300 to-amber-500 text-amber-950 font-extrabold text-lg py-4 px-5 rounded-2xl border-3 border-amber-700">
+                            متابعة التقدم السابق ⭐
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-6"></div>
+        </section>
+
+        <!-- 2. شاشة خريطة المستويات -->
+        <section id="screen-map" class="hidden bg-map flex-1 p-4 sm:p-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="bg-white/95 border-4 border-purple-400 rounded-3xl p-4 sm:p-5 mb-6 shadow-xl flex flex-col sm:flex-row items-center gap-4">
+                    <div class="flex items-center gap-2 shrink-0">
+                        <div id="map-dora" class="w-20 h-24"></div>
+                        <div id="map-boots" class="w-20 h-24"></div>
+                    </div>
+                    <div class="flex-1 text-center sm:text-right">
+                        <h2 class="text-2xl sm:text-3xl font-black text-purple-800 mb-1">
+                            خريطة مغامرة حرف السين (س) 🗺️
+                        </h2>
+                        <p id="map-welcome-speech" class="text-base sm:text-lg font-bold text-slate-700">
+                            اضغط على المحطة المفتوحة لنبدأ رحلتنا الممتعة!
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 shrink-0">
+                        <button onclick="speakMapGreeting()" class="btn-kid bg-sky-500 text-white font-bold px-4 py-2.5 rounded-2xl border-2 border-sky-700 flex items-center gap-2">
+                            <span>🔊</span>
+                            <span>استمع لدورا</span>
+                        </button>
+                        <button onclick="resetProgressConfirm()" class="text-xs font-bold text-slate-500 hover:text-rose-600 underline">
+                            بدء لعبة جديدة 🔄
+                        </button>
+                    </div>
+                </div>
+
+                <div id="levels-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 pb-8"></div>
+            </div>
+        </section>
+
+        <!-- 3. شاشة اللعب -->
+        <section id="screen-level" class="hidden flex-1 p-3 sm:p-6 flex flex-col">
+            <div class="max-w-5xl mx-auto w-full flex-1 flex flex-col justify-between gap-4">
+                <!-- شريط الشخصيات والتعليمات الصوتية -->
+                <div id="instruction-card" class="bg-white/95 border-4 border-pink-400 rounded-3xl p-3 sm:p-4 shadow-xl flex flex-col sm:flex-row items-center gap-3 transition-all">
+                    <div class="flex items-center gap-2 shrink-0 relative">
+                        <div id="lvl-dora" class="w-20 h-24 sm:w-24 sm:h-28 transition-transform"></div>
+                        <div id="lvl-boots" class="w-20 h-24 sm:w-24 sm:h-28 transition-transform"></div>
+                        <span id="speaking-badge" class="hidden absolute -top-2 right-0 bg-pink-500 text-white text-xs font-black px-2.5 py-1 rounded-full animate-bounce shadow">🗣️ دورا تشرح...</span>
+                    </div>
+                    <div class="flex-1 text-center sm:text-right">
+                        <div class="inline-block bg-gradient-to-l from-purple-500 to-pink-500 text-white font-extrabold text-xs sm:text-sm px-3.5 py-1 rounded-full mb-1 shadow-sm" id="lvl-badge">
+                            المستوى الأول
+                        </div>
+                        <h2 id="lvl-instruction-title" class="text-xl sm:text-2xl font-black text-purple-900 leading-snug">
+                            عنوان التعليمات
+                        </h2>
+                        <p id="lvl-instruction-sub" class="text-sm sm:text-base font-bold text-slate-700 mt-1">
+                            شرح إضافي
+                        </p>
+                    </div>
+                    <div class="flex sm:flex-col gap-2 shrink-0">
+                        <button id="btn-repeat-explain" onclick="repeatCurrentAudio()" class="btn-kid bg-gradient-to-b from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-extrabold px-4 py-3 rounded-2xl border-2 border-rose-800 flex items-center gap-2 text-base">
+                            <span class="text-xl">🗣️</span>
+                            <span>أعد الشرح</span>
+                        </button>
+                        <button id="btn-hint" onclick="triggerHint()" class="btn-kid bg-gradient-to-b from-yellow-300 to-amber-400 hover:from-yellow-400 hover:to-amber-500 text-amber-950 font-extrabold px-4 py-2.5 rounded-2xl border-2 border-amber-600 flex items-center gap-2 text-sm">
+                            <span>💡</span>
+                            <span>تلميح</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="level-stage" class="bg-white/95 border-4 border-sky-300 rounded-3xl p-4 sm:p-6 shadow-2xl flex-1 flex flex-col items-center justify-center min-h-[340px]"></div>
+
+                <div id="feedback-banner" class="hidden rounded-3xl p-4 border-4 shadow-xl text-center transition-all">
+                    <p id="feedback-text" class="text-xl sm:text-2xl font-black mb-2"></p>
+                    <button id="feedback-action-btn" class="btn-kid font-black text-lg px-6 py-2.5 rounded-2xl border-2"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. شاشة الاحتفال النهائي والشهادة -->
+        <section id="screen-certificate" class="hidden bg-lvl-6 flex-1 p-4 sm:p-6 flex flex-col items-center justify-center">
+            <div class="max-w-3xl w-full">
+                <div id="certificate-printable" class="bg-white border-8 border-double border-amber-500 rounded-3xl p-6 sm:p-10 shadow-2xl text-center relative overflow-hidden">
+                    <div class="text-3xl sm:text-4xl flex justify-between mb-2">
+                        <span>🌟🎈</span>
+                        <span>👑</span>
+                        <span>🎈🌟</span>
+                    </div>
+
+                    <div class="flex justify-center items-center gap-4 my-2">
+                        <div id="cert-dora" class="w-24 h-28 sm:w-28 sm:h-32 anim-joy"></div>
+                        <div class="bg-amber-100 border-4 border-amber-400 rounded-full w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center text-5xl sm:text-6xl font-black text-amber-700 shadow-md">
+                            س
+                        </div>
+                        <div id="cert-boots" class="w-24 h-28 sm:w-28 sm:h-32 anim-joy" style="animation-delay: 0.3s;"></div>
+                    </div>
+
+                    <h1 class="text-3xl sm:text-5xl font-black text-purple-800 mt-3 mb-2">
+                        شهادة بطل حرف السين
+                    </h1>
+                    <div class="w-40 h-1.5 bg-amber-400 mx-auto rounded-full mb-5"></div>
+
+                    <p class="text-xl sm:text-2xl font-extrabold text-slate-700 mb-3">
+                        تهانينا يا <span id="cert-child-name" class="text-pink-600 text-2xl sm:text-4xl underline decoration-amber-400 px-2">البطل</span>!
+                    </p>
+                    <p class="text-lg sm:text-2xl font-bold text-emerald-700 mb-6 leading-relaxed">
+                        لقد أتممت مغامرة حرف السين بنجاح وجمعت <span id="cert-stars-count" class="font-black text-amber-600">0</span> نجمة ذهبية! ⭐⭐⭐
+                    </p>
+
+                    <div class="bg-pink-50 border-3 border-pink-300 rounded-2xl py-3 px-6 inline-block mb-2">
+                        <p class="text-lg sm:text-2xl font-black text-pink-800">
+                            إعداد / ميس / سمر أحمد عبد المريد
+                        </p>
+                    </div>
+                </div>
+
+                <div class="no-print flex flex-wrap justify-center gap-4 mt-6">
+                    <button onclick="replayGrandFinale()" class="btn-kid bg-gradient-to-b from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-black text-lg sm:text-xl py-3.5 px-7 rounded-2xl border-3 border-rose-800 flex items-center gap-2">
+                        <span>🎶</span>
+                        <span>أعد أغنية التخرج!</span>
+                    </button>
+                    <button onclick="window.print()" class="btn-kid bg-sky-500 hover:bg-sky-600 text-white font-black text-lg sm:text-xl py-3.5 px-7 rounded-2xl border-3 border-sky-700 flex items-center gap-2">
+                        <span>🖨️</span>
+                        <span>طباعة / حفظ الشهادة</span>
+                    </button>
+                    <button onclick="goToMap()" class="btn-kid bg-amber-400 hover:bg-amber-500 text-amber-950 font-black text-lg sm:text-xl py-3.5 px-7 rounded-2xl border-3 border-amber-600 flex items-center gap-2">
+                        <span>🗺️</span>
+                        <span>العودة للخريطة</span>
+                    </button>
+                    <button onclick="replayWholeGame()" class="btn-kid bg-emerald-500 hover:bg-emerald-600 text-white font-black text-lg sm:text-xl py-3.5 px-7 rounded-2xl border-3 border-emerald-700 flex items-center gap-2">
+                        <span>🔄</span>
+                        <span>إعادة اللعب</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- نافذة تأكيد مخصصة -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white border-4 border-amber-400 rounded-3xl p-6 max-w-md w-full text-center shadow-2xl">
+            <div class="text-5xl mb-3">🐒</div>
+            <h3 id="modal-title" class="text-2xl font-black text-slate-800 mb-2">هل أنت متأكد؟</h3>
+            <p id="modal-body" class="text-base font-bold text-slate-600 mb-6">سيتم مسح النجوم والبدء من جديد.</p>
+            <div class="flex gap-3 justify-center">
+                <button id="modal-confirm-btn" class="btn-kid bg-rose-500 text-white font-black px-6 py-2.5 rounded-2xl border-2 border-rose-700">نعم، ابدأ من جديد</button>
+                <button onclick="closeModal()" class="btn-kid bg-slate-200 text-slate-800 font-black px-6 py-2.5 rounded-2xl border-2 border-slate-400">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة احتفال وأغنية مبهجة بعد إتمام كل مستوى -->
+    <div id="level-song-modal" class="hidden fixed inset-0 z-50 bg-gradient-to-b from-purple-600/90 via-pink-500/90 to-amber-400/90 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white border-8 border-yellow-400 rounded-3xl p-6 sm:p-8 max-w-lg w-full text-center shadow-2xl relative overflow-hidden">
+            <div class="text-4xl sm:text-5xl mb-2 flex justify-center gap-3 animate-bounce">
+                <span>🎶</span><span>🎉</span><span>🌟</span><span>🎶</span>
+            </div>
+            <div class="flex justify-center items-center gap-4 my-2">
+                <div id="song-dora" class="w-24 h-28 anim-joy"></div>
+                <div class="bg-amber-300 border-4 border-amber-500 rounded-full w-20 h-20 flex items-center justify-center text-5xl font-black text-purple-900 shadow-lg anim-float">
+                    س
+                </div>
+                <div id="song-boots" class="w-24 h-28 anim-joy" style="animation-delay: 0.25s;"></div>
+            </div>
+            <h3 id="song-modal-title" class="text-2xl sm:text-4xl font-black text-purple-800 mt-2 mb-2">
+                أغنية النجاح! 🎵
+            </h3>
+            <div class="bg-amber-50 border-3 border-amber-300 rounded-2xl p-4 mb-5">
+                <p id="song-lyrics-text" class="text-lg sm:text-2xl font-black text-pink-700 leading-relaxed">
+                    هيا نغني معًا!
+                </p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-3">
+                <button onclick="replayLevelSong()" class="btn-kid bg-pink-500 hover:bg-pink-600 text-white font-black text-lg px-5 py-3 rounded-2xl border-2 border-pink-700 flex items-center gap-2">
+                    <span>🔁</span>
+                    <span>أعد الأغنية</span>
+                </button>
+                <button id="btn-continue-after-song" class="btn-kid bg-gradient-to-b from-emerald-400 to-green-600 hover:from-emerald-500 hover:to-green-700 text-white font-black text-xl px-7 py-3 rounded-2xl border-3 border-green-800 flex items-center gap-2">
+                    <span>🗺️</span>
+                    <span>المحطة التالية!</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DORA_SVG = `
+        <svg viewBox="0 0 180 200" class="w-full h-full drop-shadow-md">
+            <path d="M35 85 C25 125, 35 150, 55 152 L125 152 C145 150, 155 125, 145 85 Z" fill="#3b2314"/>
+            <rect x="122" y="112" width="32" height="44" rx="14" fill="#9333ea" stroke="#581c87" stroke-width="3"/>
+            <path d="M128 124 Q138 132 148 124" stroke="#facc15" stroke-width="3" fill="none"/>
+            <path d="M58 122 L122 122 L130 175 L50 175 Z" fill="#f43f5e" rx="12"/>
+            <rect x="54" y="168" width="72" height="24" rx="8" fill="#f97316"/>
+            <path d="M58 128 Q35 140 30 118" stroke="#d99b66" stroke-width="13" stroke-linecap="round" fill="none" class="anim-wave"/>
+            <path d="M122 128 Q145 142 148 158" stroke="#d99b66" stroke-width="13" stroke-linecap="round" fill="none"/>
+            <circle cx="90" cy="82" r="44" fill="#e0a370"/>
+            <ellipse cx="64" cy="92" rx="7" ry="4" fill="#fb7185" opacity="0.6"/>
+            <ellipse cx="116" cy="92" rx="7" ry="4" fill="#fb7185" opacity="0.6"/>
+            <ellipse cx="74" cy="76" rx="9" ry="11" fill="#ffffff"/>
+            <ellipse cx="106" cy="76" rx="9" ry="11" fill="#ffffff"/>
+            <circle cx="75" cy="77" r="6" fill="#451a03"/>
+            <circle cx="105" cy="77" r="6" fill="#451a03"/>
+            <circle cx="77" cy="74" r="2.2" fill="#ffffff"/>
+            <circle cx="107" cy="74" r="2.2" fill="#ffffff"/>
+            <path d="M64 62 Q74 57 83 62" stroke="#3b2314" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M97 62 Q106 57 116 62" stroke="#3b2314" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="90" cy="87" r="3" fill="#c68652"/>
+            <path d="M74 98 Q90 115 106 98 Z" fill="#e11d48" stroke="#881337" stroke-width="2"/>
+            <path d="M79 100 Q90 106 101 100" fill="#ffffff"/>
+            <path d="M45 78 C45 32, 135 32, 135 78 C122 60, 108 64, 98 54 C88 64, 72 64, 62 55 C54 64, 48 68, 45 78 Z" fill="#3b2314"/>
+        </svg>`;
+
+        const BOOTS_SVG = `
+        <svg viewBox="0 0 180 200" class="w-full h-full drop-shadow-md">
+            <path d="M125 155 Q165 145 160 110 Q156 90 142 100" stroke="#3b82f6" stroke-width="9" fill="none" stroke-linecap="round"/>
+            <circle cx="44" cy="78" r="18" fill="#3b82f6"/>
+            <circle cx="44" cy="78" r="11" fill="#fde68a"/>
+            <circle cx="136" cy="78" r="18" fill="#3b82f6"/>
+            <circle cx="136" cy="78" r="11" fill="#fde68a"/>
+            <ellipse cx="90" cy="142" rx="34" ry="36" fill="#3b82f6"/>
+            <ellipse cx="90" cy="144" rx="22" ry="25" fill="#fef08a"/>
+            <path d="M58 128 Q34 112 36 92" stroke="#3b82f6" stroke-width="12" stroke-linecap="round" fill="none" class="anim-wave"/>
+            <path d="M122 128 Q146 112 144 92" stroke="#3b82f6" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <ellipse cx="70" cy="182" rx="18" ry="10" fill="#ef4444" stroke="#991b1b" stroke-width="2.5"/>
+            <ellipse cx="110" cy="182" rx="18" ry="10" fill="#ef4444" stroke="#991b1b" stroke-width="2.5"/>
+            <circle cx="90" cy="78" r="38" fill="#3b82f6"/>
+            <ellipse cx="78" cy="72" rx="15" ry="16" fill="#fef3c7"/>
+            <ellipse cx="102" cy="72" rx="15" ry="16" fill="#fef3c7"/>
+            <ellipse cx="90" cy="92" rx="26" ry="18" fill="#fef3c7"/>
+            <circle cx="79" cy="72" r="6.5" fill="#1e293b"/>
+            <circle cx="101" cy="72" r="6.5" fill="#1e293b"/>
+            <circle cx="81" cy="70" r="2.2" fill="#ffffff"/>
+            <circle cx="103" cy="70" r="2.2" fill="#ffffff"/>
+            <path d="M74 92 Q90 108 106 92" stroke="#92400e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M84 41 Q90 25 96 41" stroke="#2563eb" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg>`;
+
+        const SoundEngine = {
+            ctx: null,
+            muted: false,
+            arabicVoice: null,
+            lastSpokenText: "",
+
+            init() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) this.ctx = new AudioCtx();
+                }
+                if ('speechSynthesis' in window) {
+                    const loadVoices = () => {
+                        const voices = window.speechSynthesis.getVoices();
+                        this.arabicVoice = voices.find(v => v.lang.includes('ar-SA') || v.lang.includes('ar-EG') || v.lang.startsWith('ar')) || null;
+                    };
+                    loadVoices();
+                    window.speechSynthesis.onvoiceschanged = loadVoices;
+                }
+            },
+
+            playSuccess() {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.09);
+                    gain.gain.setValueAtTime(0.18, this.ctx.currentTime + idx * 0.09);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.09 + 0.35);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + idx * 0.09);
+                    osc.stop(this.ctx.currentTime + idx * 0.09 + 0.36);
+                });
+            },
+
+            playLevelSongMelody() {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+                const melody = [
+                    { f: 523.25, t: 0.00, d: 0.18 },
+                    { f: 523.25, t: 0.20, d: 0.18 },
+                    { f: 659.25, t: 0.40, d: 0.22 },
+                    { f: 783.99, t: 0.65, d: 0.25 },
+                    { f: 659.25, t: 0.95, d: 0.18 },
+                    { f: 783.99, t: 1.18, d: 0.28 },
+                    { f: 880.00, t: 1.50, d: 0.22 },
+                    { f: 783.99, t: 1.75, d: 0.22 },
+                    { f: 1046.50, t: 2.02, d: 0.45 }
+                ];
+                melody.forEach(note => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(note.f, this.ctx.currentTime + note.t);
+                    gain.gain.setValueAtTime(0.22, this.ctx.currentTime + note.t);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + note.t + note.d);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + note.t);
+                    osc.stop(this.ctx.currentTime + note.t + note.d + 0.02);
+                });
+            },
+
+            playGrandGraduationFanfare() {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+                const fanfare = [
+                    { f: 523.25, t: 0.00, d: 0.16 },
+                    { f: 659.25, t: 0.18, d: 0.16 },
+                    { f: 783.99, t: 0.36, d: 0.16 },
+                    { f: 1046.50, t: 0.54, d: 0.35 },
+                    { f: 880.00, t: 0.94, d: 0.18 },
+                    { f: 1046.50, t: 1.15, d: 0.22 },
+                    { f: 1174.66, t: 1.40, d: 0.22 },
+                    { f: 1318.51, t: 1.65, d: 0.55 }
+                ];
+                fanfare.forEach(note => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(note.f, this.ctx.currentTime + note.t);
+                    gain.gain.setValueAtTime(0.14, this.ctx.currentTime + note.t);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + note.t + note.d);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + note.t);
+                    osc.stop(this.ctx.currentTime + note.t + note.d + 0.03);
+                });
+            },
+
+            playTryAgain() {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+                const notes = [392.00, 349.23];
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.14);
+                    gain.gain.setValueAtTime(0.14, this.ctx.currentTime + idx * 0.14);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.14 + 0.28);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + idx * 0.14);
+                    osc.stop(this.ctx.currentTime + idx * 0.14 + 0.3);
+                });
+            },
+
+            playClick() {
+                if (this.muted) return;
+                this.init();
+                if (!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+                gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start();
+                osc.stop(this.ctx.currentTime + 0.09);
+            },
+
+            speak(text, saveAsCurrent = true) {
+                if (saveAsCurrent) this.lastSpokenText = text;
+                const badge = document.getElementById('speaking-badge');
+                const card = document.getElementById('instruction-card');
+                const repeatBtn = document.getElementById('btn-repeat-explain');
+
+                const setVisualSpeaking = (active) => {
+                    if (badge) badge.classList.toggle('hidden', !active);
+                    if (card) card.classList.toggle('is-speaking', active);
+                    if (repeatBtn) repeatBtn.classList.toggle('ring-4', active);
+                };
+
+                if (this.muted || !('speechSynthesis' in window)) return;
+                try {
+                    window.speechSynthesis.cancel();
+                    const utter = new SpeechSynthesisUtterance(text);
+                    utter.lang = 'ar-SA';
+                    if (this.arabicVoice) utter.voice = this.arabicVoice;
+                    utter.rate = 0.86;
+                    utter.pitch = 1.18;
+
+                    utter.onstart = () => setVisualSpeaking(true);
+                    utter.onend = () => setVisualSpeaking(false);
+                    utter.onerror = () => setVisualSpeaking(false);
+
+                    window.speechSynthesis.speak(utter);
+                } catch (e) {
+                    setVisualSpeaking(false);
+                }
+            }
+        };
+
+        const STORAGE_KEY = 'dora_seen_kg1_save_v1';
+
+        let gameState = {
+            childName: '',
+            unlockedLevel: 1,
+            completedLevels: [],
+            stars: 0,
+            currentLevelId: 1,
+            currentStepIndex: 0,
+            isLocked: false,
+            wrongAttempts: 0
+        };
+
+        function saveState() {
+            try {
+                const dataToSave = {
+                    childName: gameState.childName,
+                    unlockedLevel: gameState.unlockedLevel,
+                    completedLevels: gameState.completedLevels,
+                    stars: gameState.stars
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+            } catch (e) {}
+        }
+
+        function loadState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && parsed.childName) {
+                        gameState.childName = parsed.childName;
+                        gameState.unlockedLevel = parsed.unlockedLevel || 1;
+                        gameState.completedLevels = parsed.completedLevels || [];
+                        gameState.stars = parsed.stars || 0;
+                        return true;
+                    }
+                }
+            } catch (e) {}
+            return false;
+        }
+
+        const VOCAB_WORDS = [
+            { id: 'fish', word: 'سَمَكَة', plain: 'سمكة', emoji: '🐟', startsWithSeen: true, pos: 'start', highlightedHTML: '<span class="text-rose-600 underline decoration-amber-400">سَـ</span>مَكَة' },
+            { id: 'car', word: 'سَيَّارَة', plain: 'سيارة', emoji: '🚗', startsWithSeen: true, pos: 'start', highlightedHTML: '<span class="text-rose-600 underline decoration-amber-400">سَـ</span>يَّارَة' },
+            { id: 'watch', word: 'سَاعَة', plain: 'ساعة', emoji: '⌚', startsWithSeen: true, pos: 'start', highlightedHTML: '<span class="text-rose-600 underline decoration-amber-400">سَـ</span>اعَة' },
+            { id: 'turtle', word: 'سُلَحْفَاة', plain: 'سلحفاة', emoji: '🐢', startsWithSeen: true, pos: 'start', highlightedHTML: '<span class="text-rose-600 underline decoration-amber-400">سُـ</span>لَحْفَاة' },
+            { id: 'basket', word: 'سَلَّة', plain: 'سلة', emoji: '🧺', startsWithSeen: true, pos: 'start', highlightedHTML: '<span class="text-rose-600 underline decoration-amber-400">سَـ</span>لَّة' },
+            { id: 'sword', word: 'سَيْف', plain: 'سيف', emoji: '🗡️', startsWithSeen: true, pos: 'start', highlightedHTML: '<span class="text-rose-600 underline decoration-amber-400">سَـ</span>يْف' }
+        ];
+
+        const LEVELS_META = [
+            { id: 1, title: 'اكتشف حرف السين', icon: '🌱', area: 'حديقة الحروف', bgClass: 'bg-lvl-1', color: 'emerald' },
+            { id: 2, title: 'أصوات حرف السين', icon: '🎵', area: 'وادي الأصوات', bgClass: 'bg-lvl-2', color: 'purple' },
+            { id: 3, title: 'حرف السين في الكلمات', icon: '🐟', area: 'بحيرة السمك', bgClass: 'bg-lvl-3', color: 'cyan' },
+            { id: 4, title: 'مواضع حرف السين', icon: '🏘️', area: 'مدينة الكلمات', bgClass: 'bg-lvl-4', color: 'orange' },
+            { id: 5, title: 'لعبة البحث عن السين', icon: '🌲', area: 'الغابة السحرية', bgClass: 'bg-lvl-5', color: 'teal' },
+            { id: 6, title: 'تحدي بطل حرف السين', icon: '🏆', area: 'ساحة الاحتفال', bgClass: 'bg-lvl-6', color: 'rose' }
+        ];
+
+        function getLevelSteps(levelId) {
+            const name = gameState.childName || 'يا بطل';
+            switch (levelId) {
+                case 1:
+                    return [
+                        {
+                            type: 'explain_letter',
+                            title: 'هذا هو صديقنا حرف السين (س)',
+                            sub: 'انظر يا ' + name + '! لحرف السين ثلاث أسنان صغيرة، وليس عليه أي نقاط.',
+                            speech: `مرحباً يا ${name}! هذا هو حرف السين. صوته سْ. انظر جيداً، لحرف السين ثلاث أسنان صغيرة، وليس عليه نقاط! اضغط على الحرف لتسمع صوته.`
+                        },
+                        {
+                            type: 'mcq_cards',
+                            title: 'اختر حرف السين من بين الحروف',
+                            sub: 'تذكر: حرف السين له ثلاث أسنان وليس عليه نقاط!',
+                            speech: `يا ${name}، اختر حرف السين من بين هذه الحروف!`,
+                            options: shuffle([
+                                { label: 'س', correct: true, speak: 'سْ' },
+                                { label: 'ش', correct: false, speak: 'شْ' },
+                                { label: 'ص', correct: false, speak: 'صْ' }
+                            ])
+                        },
+                        {
+                            type: 'multi_select_cards',
+                            title: 'اضغط على جميع بطاقات حرف السين (س)',
+                            sub: 'ابحث عن كل بطاقات حرف السين واضغط عليها!',
+                            speech: `اضغط على جميع بطاقات حرف السين يا ${name}!`,
+                            targetCount: 3,
+                            cards: shuffle([
+                                { id: 1, label: 'س', correct: true },
+                                { id: 2, label: 'ب', correct: false },
+                                { id: 3, label: 'س', correct: true },
+                                { id: 4, label: 'ش', correct: false },
+                                { id: 5, label: 'س', correct: true },
+                                { id: 6, label: 'ت', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'audio_mcq',
+                            title: 'استمع لصوت دورا واختر الحرف الصحيح',
+                            sub: 'اضغط على السماعة لتسمع الصوت مرة أخرى',
+                            targetSoundText: 'سْ',
+                            speech: `استمع جيداً يا ${name}: سْ... سْ... أي حرف نطقت به دورا؟`,
+                            options: shuffle([
+                                { label: 'س', correct: true },
+                                { label: 'م', correct: false },
+                                { label: 'ش', correct: false }
+                            ])
+                        }
+                    ];
+
+                case 2:
+                    return [
+                        {
+                            type: 'explain_harakat',
+                            title: 'أصوات حرف السين مع الحركات القصيرة',
+                            sub: 'اضغط على كل بطاقة لتسمع صوت حرف السين مع الفتحة والكسرة والضمة!',
+                            speech: `هيا نتعلم أصوات حرف السين يا ${name}! سين فتحة سَ، سين كسرة سِ، سين ضمة سُ. اضغط على كل بطاقة لتسمعها!`,
+                            items: [
+                                { char: 'سَ', name: 'سين بالفتحة', sound: 'سَ', color: 'bg-rose-100 border-rose-400 text-rose-700', gesture: 'نفتح فمنا: سَ' },
+                                { char: 'سِ', name: 'سين بالكسرة', sound: 'سِ', color: 'bg-sky-100 border-sky-400 text-sky-700', gesture: 'نبتسم للأسفل: سِ' },
+                                { char: 'سُ', name: 'سين بالضمة', sound: 'سُ', color: 'bg-amber-100 border-amber-400 text-amber-700', gesture: 'نضم شفتينا: سُ' }
+                            ]
+                        },
+                        {
+                            type: 'audio_mcq',
+                            title: 'استمع إلى الصوت: "سَ" واختر البطاقة الصحيحة',
+                            sub: 'الفتحة خط صغير فوق الحرف',
+                            targetSoundText: 'سَ',
+                            speech: `استمع إلى: سَ... سَ... اختر بطاقة سَ يا ${name}!`,
+                            options: shuffle([
+                                { label: 'سَ', correct: true },
+                                { label: 'سِ', correct: false },
+                                { label: 'سُ', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'audio_mcq',
+                            title: 'أي بطاقة تمثل صوت "سِ" (سين بالكسرة)؟',
+                            sub: 'الكسرة خط صغير تحت الحرف',
+                            targetSoundText: 'سِ',
+                            speech: `أي بطاقة تمثل سِ يا ${name}؟ سِ... سِ...`,
+                            options: shuffle([
+                                { label: 'سِ', correct: true },
+                                { label: 'سَ', correct: false },
+                                { label: 'سُ', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'audio_mcq',
+                            title: 'استمع للصوت وطابقه مع الحركة المناسبة: "سُ"',
+                            sub: 'الضمة واو صغيرة فوق الحرف',
+                            targetSoundText: 'سُ',
+                            speech: `استمع جيداً يا ${name}: سُ... سُ... اختر البطاقة المناسبة!`,
+                            options: shuffle([
+                                { label: 'سُ', correct: true },
+                                { label: 'سَ', correct: false },
+                                { label: 'سِ', correct: false }
+                            ])
+                        }
+                    ];
+
+                case 3:
+                    return [
+                        {
+                            type: 'vocab_showcase',
+                            title: 'كلمات جميلة تبدأ بحرف السين (س)',
+                            sub: 'اضغط على كل صورة لتسمع اسمها وترى حرف السين الملون!',
+                            speech: `اضغط على كل صورة يا ${name} لتسمع اسمها الجميل وتكتشف حرف السين في أولها!`,
+                            words: VOCAB_WORDS
+                        },
+                        {
+                            type: 'image_mcq',
+                            title: 'أين السمكة؟ اختر الصورة الصحيحة!',
+                            sub: 'سمكة تبدأ بحرف السين: سَمَكَة',
+                            speech: `أين السمكة يا ${name}؟ اختر صورة السمكة!`,
+                            options: shuffle([
+                                { emoji: '🐟', word: 'سَمَكَة', correct: true },
+                                { emoji: '🍌', word: 'مَوْزَة', correct: false },
+                                { emoji: '🐱', word: 'قِطَّة', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'image_mcq',
+                            title: 'أي صورة تبدأ بصوت السين (س)؟',
+                            sub: 'انطق اسم كل صورة واكتشف حرف السين',
+                            speech: `أي صورة من هذه الصور تبدأ بصوت السين يا ${name}؟`,
+                            options: shuffle([
+                                { emoji: '⌚', word: 'سَاعَة', correct: true },
+                                { emoji: '🍎', word: 'تُفَّاحَة', correct: false },
+                                { emoji: '🍌', word: 'مَوْزَة', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'image_mcq',
+                            title: 'استمع إلى كلمة "سَيَّارَة" واختر صورتها!',
+                            sub: 'سَيَّارَة تبدأ بحرف السين',
+                            speech: `استمع: سَيَّارَة... سَيَّارَة... اختر صورة السيارة يا ${name}!`,
+                            options: shuffle([
+                                { emoji: '🚗', word: 'سَيَّارَة', correct: true },
+                                { emoji: '🐱', word: 'قِطَّة', correct: false },
+                                { emoji: '🍎', word: 'تُفَّاحَة', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'multi_image_select',
+                            title: 'اختر جميع الصور التي تبدأ بحرف السين!',
+                            sub: 'هناك 3 صور تبدأ بحرف السين، اضغط عليها جميعاً',
+                            speech: `اختر كل الصور التي تبدأ بحرف السين يا ${name}!`,
+                            targetCount: 3,
+                            items: shuffle([
+                                { id: 't1', emoji: '🐢', word: 'سُلَحْفَاة', correct: true },
+                                { id: 't2', emoji: '🧺', word: 'سَلَّة', correct: true },
+                                { id: 't3', emoji: '🗡️', word: 'سَيْف', correct: true },
+                                { id: 't4', emoji: '🍌', word: 'مَوْزَة', correct: false },
+                                { id: 't5', emoji: '🐱', word: 'قِطَّة', correct: false },
+                                { id: 't6', emoji: '🍎', word: 'تُفَّاحَة', correct: false }
+                            ])
+                        }
+                    ];
+
+                case 4:
+                    return [
+                        {
+                            type: 'explain_positions',
+                            title: 'أين يختبئ حرف السين في الكلمة؟',
+                            sub: 'اضغط على كل بطاقة لترى شكل حرف السين في الأول والوسط والآخر!',
+                            speech: `انظر يا ${name}! حرف السين يمد يده ليمسك أصدقاءه الحروف. في أول الكلمة سـ مثل سمكة، وفي وسط الكلمة ـسـ مثل أسد، وفي آخر الكلمة ـس مثل جرس!`,
+                            positions: [
+                                {
+                                    posLabel: 'أول الكلمة',
+                                    form: 'سـ',
+                                    emoji: '🐟',
+                                    wordHTML: '<span class="text-rose-600 bg-yellow-200 px-1 rounded">سَـ</span>مَكَة',
+                                    plainWord: 'سمكة',
+                                    desc: 'يمد يده لليسار ⬅️'
+                                },
+                                {
+                                    posLabel: 'وسط الكلمة',
+                                    form: 'ـسـ',
+                                    emoji: '🦁',
+                                    wordHTML: 'أَ<span class="text-rose-600 bg-yellow-200 px-1 rounded">سَـ</span>د',
+                                    plainWord: 'أسد',
+                                    desc: 'في منتصف الكلمة ↔️'
+                                },
+                                {
+                                    posLabel: 'آخر الكلمة',
+                                    form: 'ـس',
+                                    emoji: '🔔',
+                                    wordHTML: 'جَرَ<span class="text-rose-600 bg-yellow-200 px-1 rounded">س</span>',
+                                    plainWord: 'جرس',
+                                    desc: 'في نهاية الكلمة ➡️'
+                                }
+                            ]
+                        },
+                        {
+                            type: 'position_mcq',
+                            title: 'أين حرف السين في كلمة "سَمَكَة"؟',
+                            sub: 'انظر إلى الحرف الملون باللون الأحمر 🐟',
+                            wordDisplay: '<span class="text-rose-600 underline">سَـ</span>مَكَة',
+                            emoji: '🐟',
+                            speech: `انظر إلى كلمة سمكة يا ${name}! أين يقع حرف السين الملون؟`,
+                            options: shuffle([
+                                { label: 'في أول الكلمة (سـ)', correct: true },
+                                { label: 'في وسط الكلمة (ـسـ)', correct: false },
+                                { label: 'في آخر الكلمة (ـس)', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'word_position_mcq',
+                            title: 'اختر الكلمة التي يقع فيها حرف السين في الوسط!',
+                            sub: 'ابحث عن الكلمة التي فيها السين في المنتصف',
+                            speech: `يا ${name}، اختر الكلمة التي يقع فيها حرف السين في الوسط!`,
+                            options: shuffle([
+                                { emoji: '🦁', wordHTML: 'أَ<span class="text-rose-600">سَـ</span>د', plain: 'أسد', correct: true },
+                                { emoji: '🐟', wordHTML: '<span class="text-rose-600">سَـ</span>مَكَة', plain: 'سمكة', correct: false },
+                                { emoji: '🔔', wordHTML: 'جَرَ<span class="text-rose-600">س</span>', plain: 'جرس', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'position_mcq',
+                            title: 'أين يقع حرف السين في كلمة "جَرَس"؟',
+                            sub: 'انظر إلى الحرف الملون في نهاية الكلمة 🔔',
+                            wordDisplay: 'جَرَ<span class="text-rose-600 underline">س</span>',
+                            emoji: '🔔',
+                            speech: `انظر إلى كلمة جرس يا ${name}! أين يقع حرف السين؟`,
+                            options: shuffle([
+                                { label: 'في آخر الكلمة (ـس)', correct: true },
+                                { label: 'في أول الكلمة (سـ)', correct: false },
+                                { label: 'في وسط الكلمة (ـسـ)', correct: false }
+                            ])
+                        }
+                    ];
+
+                case 5:
+                    return [
+                        {
+                            type: 'forest_hunt',
+                            title: 'ابحث عن الأشياء التي تبدأ بصوت السين!',
+                            sub: 'اضغط على الأشياء التي تبدأ بحرف السين لتضعها في سلة بوتس 🧺',
+                            speech: `يا أصدقائي! يا ${name}! لقد اختبأت الأشياء التي تبدأ بصوت السين في الغابة السحرية. ساعدونا في العثور عليها ووضعها في سلة بوتس!`,
+                            targetCount: 4,
+                            items: shuffle([
+                                { id: 'f1', emoji: '🐟', word: 'سَمَكَة', correct: true },
+                                { id: 'f2', emoji: '🚗', word: 'سَيَّارَة', correct: true },
+                                { id: 'f3', emoji: '⌚', word: 'سَاعَة', correct: true },
+                                { id: 'f4', emoji: '🐢', word: 'سُلَحْفَاة', correct: true },
+                                { id: 'f5', emoji: '🍌', word: 'مَوْزَة', correct: false },
+                                { id: 'f6', emoji: '🐱', word: 'قِطَّة', correct: false }
+                            ])
+                        }
+                    ];
+
+                case 6:
+                    return [
+                        {
+                            type: 'mcq_cards',
+                            title: 'التحدي 1/6: تعرف على شكل حرف السين',
+                            sub: 'اختر حرف السين الذي له ثلاث أسنان بلا نقاط',
+                            speech: `التحدي الأول يا ${name}! اختر حرف السين!`,
+                            options: shuffle([
+                                { label: 'س', correct: true, speak: 'سْ' },
+                                { label: 'ش', correct: false, speak: 'شْ' },
+                                { label: 'ص', correct: false, speak: 'صْ' }
+                            ])
+                        },
+                        {
+                            type: 'audio_mcq',
+                            title: 'التحدي 2/6: استمع إلى صوت الحرف واختره',
+                            sub: 'اضغط على السماعة لسماع الصوت',
+                            targetSoundText: 'سْ',
+                            speech: `التحدي الثاني يا ${name}! استمع للصوت: سْ... سْ... واختر الحرف الصحيح!`,
+                            options: shuffle([
+                                { label: 'س', correct: true },
+                                { label: 'ل', correct: false },
+                                { label: 'ش', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'audio_mcq',
+                            title: 'التحدي 3/6: حدد السين بالفتحة (سَ)',
+                            sub: 'اختر السين التي فوقها فتحة',
+                            targetSoundText: 'سَ',
+                            speech: `التحدي الثالث يا ${name}! حدد السين بالفتحة: سَ!`,
+                            options: shuffle([
+                                { label: 'سَ', correct: true },
+                                { label: 'سِ', correct: false },
+                                { label: 'سُ', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'image_mcq',
+                            title: 'التحدي 4/6: اختر صورة تبدأ بحرف السين',
+                            sub: 'أي صورة تبدأ بصوت (س)؟',
+                            speech: `التحدي الرابع يا ${name}! اختر الصورة التي تبدأ بحرف السين!`,
+                            options: shuffle([
+                                { emoji: '🧺', word: 'سَلَّة', correct: true },
+                                { emoji: '🍎', word: 'تُفَّاحَة', correct: false },
+                                { emoji: '🍌', word: 'مَوْزَة', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'position_mcq',
+                            title: 'التحدي 5/6: حدد موضع السين داخل كلمة "أَسَد"',
+                            sub: 'انظر إلى حرف السين الملون في كلمة أَسَد 🦁',
+                            wordDisplay: 'أَ<span class="text-rose-600 underline">سَـ</span>د',
+                            emoji: '🦁',
+                            speech: `التحدي الخامس يا ${name}! أين يقع حرف السين في كلمة أسد؟`,
+                            options: shuffle([
+                                { label: 'في وسط الكلمة (ـسـ)', correct: true },
+                                { label: 'في أول الكلمة (سـ)', correct: false },
+                                { label: 'في آخر الكلمة (ـس)', correct: false }
+                            ])
+                        },
+                        {
+                            type: 'multi_image_select',
+                            title: 'التحدي الأخير 6/6: اختر جميع الصور التي تبدأ بحرف السين!',
+                            sub: 'اجمع آخر النجوم لتحصل على شهادة بطل حرف السين 🏆',
+                            speech: `التحدي الأخير يا ${name}! اختر جميع الصور التي تبدأ بحرف السين من المشهد لتفوز بالشهادة!`,
+                            targetCount: 3,
+                            items: shuffle([
+                                { id: 'c1', emoji: '🐟', word: 'سَمَكَة', correct: true },
+                                { id: 'c2', emoji: '🚗', word: 'سَيَّارَة', correct: true },
+                                { id: 'c3', emoji: '🗡️', word: 'سَيْف', correct: true },
+                                { id: 'c4', emoji: '🐱', word: 'قِطَّة', correct: false },
+                                { id: 'c5', emoji: '🍌', word: 'مَوْزَة', correct: false }
+                            ])
+                        }
+                    ];
+            }
+            return [];
+        }
+
+        function shuffle(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function triggerCelebrationVisuals() {
+            const layer = document.getElementById('celebration-layer');
+            layer.innerHTML = '';
+            const balloonColors = ['#ef4444', '#3b82f6', '#eab308', '#ec4899', '#10b981', '#8b5cf6'];
+            const confettiEmojis = ['⭐', '✨', '🌟', '🎉', '🎊'];
+
+            for (let i = 0; i < 12; i++) {
+                const b = document.createElement('div');
+                const color = balloonColors[i % balloonColors.length];
+                const left = Math.random() * 90 + 2;
+                const delay = Math.random() * 0.6;
+                b.style.cssText = `
+                    position: absolute;
+                    left: ${left}%;
+                    bottom: -80px;
+                    width: 44px;
+                    height: 54px;
+                    background: ${color};
+                    border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+                    box-shadow: inset -6px -6px 12px rgba(0,0,0,0.18);
+                    animation: balloonRise 2.6s ease-out ${delay}s forwards;
+                `;
+                const string = document.createElement('div');
+                string.style.cssText = 'width: 2px; height: 35px; background: rgba(0,0,0,0.3); margin: 54px auto 0;';
+                b.appendChild(string);
+                layer.appendChild(b);
+            }
+
+            for (let i = 0; i < 18; i++) {
+                const c = document.createElement('div');
+                c.textContent = confettiEmojis[i % confettiEmojis.length];
+                const left = Math.random() * 94 + 2;
+                const delay = Math.random() * 0.5;
+                c.style.cssText = `
+                    position: absolute;
+                    left: ${left}%;
+                    top: -40px;
+                    font-size: ${22 + Math.random() * 16}px;
+                    animation: confettiFall 2.4s linear ${delay}s forwards;
+                `;
+                layer.appendChild(c);
+            }
+
+            setTimeout(() => { layer.innerHTML = ''; }, 3200);
+        }
+
+        function getRandomPraise() {
+            const name = gameState.childName || 'يا بطل';
+            const phrases = [
+                `أحسنت يا ${name}! 🌟`,
+                `رائع يا بطل! 👏`,
+                `إجابة صحيحة! 🎉`,
+                `ممتاز يا ${name}! ⭐`,
+                `أنت ذكي جدًا يا ${name}! 🏆`
+            ];
+            return phrases[Math.floor(Math.random() * phrases.length)];
+        }
+
+        let currentSteps = [];
+
+        function showScreen(screenId) {
+            ['screen-welcome', 'screen-map', 'screen-level', 'screen-certificate'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            document.getElementById(screenId).classList.remove('hidden');
+
+            const hud = document.getElementById('top-hud');
+            const progressWrap = document.getElementById('hud-progress-wrap');
+            if (screenId === 'screen-welcome' || screenId === 'screen-certificate') {
+                hud.classList.add('hidden');
+            } else {
+                hud.classList.remove('hidden');
+                document.getElementById('hud-child-name').textContent = gameState.childName;
+                document.getElementById('hud-stars').textContent = gameState.stars;
+                if (screenId === 'screen-level') {
+                    progressWrap.classList.remove('hidden');
+                } else {
+                    progressWrap.classList.add('hidden');
+                }
+            }
+        }
+
+        function startAdventure(useSaved) {
+            SoundEngine.init();
+            SoundEngine.playClick();
+
+            if (!useSaved) {
+                const input = document.getElementById('child-name-input');
+                const val = input.value.trim();
+                const err = document.getElementById('name-error-msg');
+                if (!val) {
+                    err.classList.remove('hidden');
+                    input.classList.add('anim-shake', 'border-rose-500');
+                    setTimeout(() => input.classList.remove('anim-shake'), 500);
+                    SoundEngine.speak('من فضلك اكتب اسمك يا بطل لنبدأ المغامرة!', false);
+                    return;
+                }
+                err.classList.add('hidden');
+                if (gameState.childName !== val) {
+                    gameState.childName = val;
+                    gameState.unlockedLevel = 1;
+                    gameState.completedLevels = [];
+                    gameState.stars = 0;
+                    saveState();
+                }
+            }
+
+            goToMap(true);
+        }
+
+        function goToMap(isFirstGreeting = false) {
+            gameState.isLocked = false;
+            showScreen('screen-map');
+            renderMap();
+
+            const greetingText = `مرحبًا يا ${gameState.childName}! أنا دورا، وهذا صديقي بوتس. هل أنت مستعد لمغامرتنا مع حرف السين؟ هيا بنا!`;
+            document.getElementById('map-welcome-speech').textContent = greetingText;
+            if (isFirstGreeting) SoundEngine.speak(greetingText);
+        }
+        function speakMapGreeting(){ SoundEngine.playClick(); SoundEngine.speak(`مرحبًا يا ${gameState.childName}! أنا دورا، وهذا صديقي بوتس. اضغط على المحطة المفتوحة لنكتشف حرف السين!`); }
+        function renderMap(){
+          const grid=document.getElementById('levels-grid'); grid.innerHTML='';
+          LEVELS_META.forEach(lvl=>{
+            const open=lvl.id<=gameState.unlockedLevel, done=gameState.completedLevels.includes(lvl.id);
+            const btn=document.createElement('button'); btn.disabled=!open;
+            btn.className=`btn-kid rounded-3xl p-5 border-4 text-right transition-transform min-h-44 ${done?'bg-white border-emerald-500':open?'bg-white border-amber-400 hover:scale-[1.03]':'bg-slate-100 border-slate-300 opacity-75'}`;
+            btn.innerHTML=`<div class="text-5xl mb-3">${open?lvl.icon:'🔒'}</div><div class="font-bold text-sm text-purple-700">المحطة ${lvl.id} • ${lvl.area}</div><div class="text-2xl font-black mt-2">${lvl.title}</div><div class="font-bold text-emerald-700 mt-2">${done?'مكتمل ⭐⭐':open?'مفتوح الآن! 🚀':'مقفل 🔒'}</div>`;
+            btn.onclick=()=>startLevel(lvl.id);grid.appendChild(btn);
+          });
+        }
+        function startLevel(id){
+          SoundEngine.playClick();gameState.currentLevelId=id;gameState.currentStepIndex=0;gameState.isLocked=false;currentSteps=getLevelSteps(id);
+          const meta=LEVELS_META.find(x=>x.id===id);
+          document.getElementById('screen-level').className=`flex-1 p-3 sm:p-6 flex flex-col ${meta.bgClass}`;
+          document.getElementById('lvl-badge').textContent=`المحطة ${id}: ${meta.area}`;
+          showScreen('screen-level');renderCurrentStep();
+        }
+        function updateProgressHUD(){
+          const total=currentSteps.length;
+          document.getElementById('hud-step-text').textContent=`النشاط ${gameState.currentStepIndex+1} من ${total}`;
+          document.getElementById('hud-progress-bar').style.width=`${Math.round(gameState.currentStepIndex/total*100)}%`;
+          document.getElementById('hud-stars').textContent=gameState.stars;
+        }
+        function hideFeedback(){document.getElementById('feedback-banner').classList.add('hidden');}
+        function repeatCurrentAudio(){SoundEngine.playClick();if(SoundEngine.lastSpokenText)SoundEngine.speak(SoundEngine.lastSpokenText,false);}
+        function triggerHint(){
+          const step=currentSteps[gameState.currentStepIndex];if(!step)return;
+          SoundEngine.speak(step.targetSoundText?`تلميح من دورا: ${step.targetSoundText}`:step.speech,false);
+          document.querySelectorAll('[data-correct="true"]:not([disabled])').forEach(x=>x.classList.add('anim-hint'));
+        }
+        const kidCard='btn-kid bg-white hover:bg-amber-50 border-4 border-purple-400 rounded-3xl p-5 min-h-32 flex flex-col items-center justify-center gap-2 text-3xl sm:text-5xl font-black';
+        function makeButton(content, correct, action){
+          const b=document.createElement('button');b.className=kidCard;b.dataset.correct=String(!!correct);b.innerHTML=content;b.onclick=()=>action(b);return b;
+        }
+        function gridFor(stage, columns=3){
+          const grid=document.createElement('div');grid.className=`grid ${columns===3?'grid-cols-2 sm:grid-cols-3':'grid-cols-2'} gap-4 w-full max-w-3xl`;stage.appendChild(grid);return grid;
+        }
+        function nextButton(stage,label){
+          const b=document.createElement('button');b.className='btn-kid bg-emerald-500 text-white font-black text-xl px-8 py-4 rounded-2xl border-4 border-emerald-700 mt-5';b.textContent=label;b.onclick=advanceStep;stage.appendChild(b);
+        }
+        function renderCurrentStep(){
+          gameState.isLocked=false;gameState.wrongAttempts=0;hideFeedback();updateProgressHUD();
+          document.getElementById('lvl-dora').classList.remove('anim-joy');document.getElementById('lvl-boots').classList.remove('anim-joy');
+          const step=currentSteps[gameState.currentStepIndex],stage=document.getElementById('level-stage');
+          if(!step)return;stage.innerHTML='';
+          document.getElementById('lvl-instruction-title').textContent=step.title;
+          document.getElementById('lvl-instruction-sub').textContent=step.sub;
+          SoundEngine.speak(step.speech);
+          if(step.type==='explain_letter'){
+            stage.innerHTML='<button id="letter-sound" class="btn-kid bg-yellow-200 border-4 border-yellow-500 rounded-3xl text-8xl font-black p-8">س</button><p class="font-black text-xl mt-5">ثلاث أسنان صغيرة، بدون نقاط. اضغط على الحرف لتسمع صوته!</p>';
+            document.getElementById('letter-sound').onclick=()=>SoundEngine.speak('سْ',false);nextButton(stage,'فهمت! هيا نلعب 🚀');return;
+          }
+          if(step.type==='explain_harakat'){
+            const grid=gridFor(stage);step.items.forEach(x=>grid.appendChild(makeButton(`<span class="text-7xl">${x.char}</span><span class="text-lg">${x.name}</span><span class="text-sm">${x.gesture}</span>`,false,()=>SoundEngine.speak(x.sound,false))));
+            nextButton(stage,'تعرفت على الأصوات! هيا نتدرب 🎯');return;
+          }
+          if(step.type==='vocab_showcase'){
+            const grid=gridFor(stage);step.words.forEach(x=>grid.appendChild(makeButton(`<span class="text-6xl">${x.emoji}</span><span class="text-xl">${x.highlightedHTML}</span>`,false,()=>SoundEngine.speak(x.word,false))));
+            nextButton(stage,'هيا نجيب على الأسئلة 🌟');return;
+          }
+          if(step.type==='explain_positions'){
+            const grid=gridFor(stage);step.positions.forEach(x=>grid.appendChild(makeButton(`<span class="text-lg">${x.posLabel}</span><span class="text-6xl text-rose-600">${x.form}</span><span>${x.emoji}</span><span class="text-xl">${x.wordHTML}</span>`,false,()=>SoundEngine.speak(`${x.posLabel} مثل ${x.plainWord}`,false))));
+            nextButton(stage,'فهمت مواضع السين! هيا نلعب 🚀');return;
+          }
+          if(step.type==='audio_mcq'){
+            const listen=document.createElement('button');listen.className='btn-kid bg-pink-500 text-white rounded-full p-4 text-2xl font-black mb-5';listen.textContent='🔊 اضغط لسماع الصوت';listen.onclick=()=>SoundEngine.speak(step.targetSoundText,false);stage.appendChild(listen);
+          }
+          if(step.type==='position_mcq'){
+            const h=document.createElement('div');h.className='bg-yellow-100 rounded-3xl p-5 text-5xl font-black mb-5';h.innerHTML=`${step.emoji} ${step.wordDisplay}`;stage.appendChild(h);
+          }
+          if(['mcq_cards','audio_mcq','image_mcq','position_mcq','word_position_mcq'].includes(step.type)){
+            const grid=gridFor(stage);step.options.forEach(x=>{
+              const content=x.emoji?`<span class="text-6xl">${x.emoji}</span><span class="text-xl">${x.wordHTML||x.word}</span>`:`<span>${x.wordHTML||x.label}</span>`;
+              grid.appendChild(makeButton(content,x.correct,b=>{if(x.speak||x.word)SoundEngine.speak(x.speak||x.word,false);handleSingleAnswer(x.correct,b);}));
+            });return;
+          }
+          if(['multi_select_cards','multi_image_select','forest_hunt'].includes(step.type)){
+            let collected=0;const total=step.targetCount;
+            const counter=document.createElement('div');counter.className='rounded-full bg-yellow-100 border-4 border-yellow-400 px-5 py-2 font-black text-xl mb-5';counter.textContent=`🧺 جمعنا 0 من ${total}`;stage.appendChild(counter);
+            const grid=gridFor(stage);const items=step.cards||step.items;
+            items.forEach(x=>{
+              const content=x.emoji?`<span class="text-6xl">${x.emoji}</span><span class="text-xl">${x.word}</span>`:`<span>${x.label}</span>`;
+              grid.appendChild(makeButton(content,x.correct,b=>{
+                if(gameState.isLocked||b.disabled)return;
+                if(x.correct){b.disabled=true;b.classList.add('bg-emerald-300','border-emerald-700');collected++;counter.textContent=`🧺 جمعنا ${collected} من ${total}`;SoundEngine.playSuccess();if(collected===total)completeCurrentStep();}
+                else handleWrongAttempt(b);
+              }));
+            });return;
+          }
+          nextButton(stage,'التالي');
+        }
+        function handleSingleAnswer(correct,btn){if(gameState.isLocked)return;if(correct){btn.classList.add('bg-emerald-300','border-emerald-700');completeCurrentStep();}else handleWrongAttempt(btn);}
+        function handleWrongAttempt(btn){
+          gameState.wrongAttempts++;SoundEngine.playTryAgain();btn.classList.add('anim-shake','bg-rose-100','border-rose-500');
+          const fb=document.getElementById('feedback-banner');fb.className='rounded-3xl p-4 border-4 text-center bg-amber-50 border-amber-400';
+          document.getElementById('feedback-text').textContent='محاولة جميلة! جرب مرة أخرى 😊';
+          const action=document.getElementById('feedback-action-btn');action.textContent='حاول مرة أخرى 🔄';action.className='btn-kid bg-amber-400 rounded-2xl px-6 py-2 font-black';action.onclick=()=>{hideFeedback();if(gameState.wrongAttempts>=2)triggerHint();};
+          SoundEngine.speak(`حاول مرة أخرى يا ${gameState.childName}`,false);
+        }
+        function completeCurrentStep(){
+          if(gameState.isLocked)return;gameState.isLocked=true;gameState.stars++;saveState();updateProgressHUD();
+          SoundEngine.playSuccess();triggerCelebrationVisuals();
+          document.getElementById('lvl-dora').classList.add('anim-joy');document.getElementById('lvl-boots').classList.add('anim-joy');
+          const praise=getRandomPraise();SoundEngine.speak(praise,false);
+          const last=gameState.currentStepIndex===currentSteps.length-1;
+          const fb=document.getElementById('feedback-banner');fb.className='rounded-3xl p-4 border-4 text-center bg-emerald-100 border-emerald-500';
+          document.getElementById('feedback-text').textContent=`${praise} +1 ⭐`;
+          const btn=document.getElementById('feedback-action-btn');btn.textContent=last?'إنهاء المحطة 🏆':'السؤال التالي ⬅️';btn.className='btn-kid bg-emerald-500 text-white font-black text-xl rounded-2xl px-6 py-3';btn.onclick=advanceStep;
+        }
+        function advanceStep(){SoundEngine.playClick();if(gameState.currentStepIndex<currentSteps.length-1){gameState.currentStepIndex++;renderCurrentStep();}else finishCurrentLevel();}
+        function finishCurrentLevel(){
+          const id=gameState.currentLevelId;
+          if(!gameState.completedLevels.includes(id)){gameState.completedLevels.push(id);gameState.stars+=2;}
+          if(id<6)gameState.unlockedLevel=Math.max(gameState.unlockedLevel,id+1);
+          saveState();if(id===6)showFinalCertificate();else showLevelCelebrationSong(id);
+        }
+        let currentLevelSongLyrics='';
+        function showLevelCelebrationSong(id){
+          currentLevelSongLyrics=`أحسنت يا ${gameState.childName}! أنهيت المحطة ${id} بنجاح! سين سين يا أبطال، مع دورا وبوتس نكمل المشوار!`;
+          document.getElementById('song-modal-title').textContent=`أغنية نجاح المحطة ${id}! 🎶`;
+          document.getElementById('song-lyrics-text').textContent=currentLevelSongLyrics;
+          document.getElementById('level-song-modal').classList.remove('hidden');
+          document.getElementById('btn-continue-after-song').onclick=()=>{document.getElementById('level-song-modal').classList.add('hidden');goToMap();};
+          replayLevelSong();
+        }
+        function replayLevelSong(){SoundEngine.playLevelSongMelody();SoundEngine.speak(currentLevelSongLyrics,false);}
+        function showFinalCertificate(){
+          document.getElementById('cert-child-name').textContent=gameState.childName;
+          document.getElementById('cert-stars-count').textContent=gameState.stars;
+          showScreen('screen-certificate');triggerCelebrationVisuals();replayGrandFinale();
+        }
+        function replayGrandFinale(){SoundEngine.playGrandGraduationFanfare();SoundEngine.speak(`مبروك يا ${gameState.childName}! أنت بطل حرف السين!`,false);}
+        function closeModal(){document.getElementById('custom-modal').classList.add('hidden');}
+        function resetProgressConfirm(){
+          document.getElementById('modal-body').textContent='هل تريد مسح النجوم والبدء من جديد؟';
+          document.getElementById('modal-confirm-btn').onclick=()=>{closeModal();gameState.completedLevels=[];gameState.unlockedLevel=1;gameState.stars=0;saveState();goToMap();};
+          document.getElementById('custom-modal').classList.remove('hidden');
+        }
+        function replayWholeGame(){gameState.completedLevels=[];gameState.unlockedLevel=1;gameState.stars=0;saveState();goToMap();}
+        function toggleMute(){SoundEngine.muted=!SoundEngine.muted;document.getElementById('btn-mute').textContent=SoundEngine.muted?'🔇':'🔊';if(SoundEngine.muted&&'speechSynthesis'in window)window.speechSynthesis.cancel();}
+        function init(){
+          ['welcome-dora','map-dora','lvl-dora','cert-dora','song-dora'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML=DORA_SVG;});
+          ['welcome-boots','map-boots','lvl-boots','cert-boots','song-boots'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML=BOOTS_SVG;});
+          if(loadState()){
+            document.getElementById('child-name-input').value=gameState.childName;
+            document.getElementById('btn-continue-saved').classList.remove('hidden');
+          }
+          document.getElementById('child-name-input').addEventListener('keydown',e=>{if(e.key==='Enter')startAdventure(false);});
+        }
+        init();
+    </script>
+</body>
+</html>
